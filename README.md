@@ -1,7 +1,7 @@
 # SensorNetwork20202_DashServer_SDS011_DHT22
 Author: Danien Jarvis
 Contacts:  jarvissan21@gmail.com
-Status : (Git instruction under construction, GITでマニュアルを作成中)
+Status : (Git instruction under construction, GITでマニュアルの作成中)
 
 Successor to [SDS-011-Python](https://github.com/JarvisSan22/SDS-011-Python)
 Happy to recive feedback, and to implement contributions  
@@ -14,8 +14,8 @@ Network data is displated using plotly dash for a nice clean interface.
 
 
 ![SDS-011](https://github.com/JarvisSan22/SDS-011-Python/blob/master/SDS011-setup.jpg)
-![DASH1](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/master/Dash1.png)
-![DASH2](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/master/Dash2.png)
+![DASH1](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/Dash1.png)
+![DASH2](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/Dash2.png)
 
 # Kit List 
 - [SDS011](https://www.amazon.co.uk/gp/product/B07D7BL33R/ref=as_li_tl?ie=UTF8&camp=1634&creative=6738&creativeASIN=B07D7BL33R&linkCode=as2&tag=jarvissan-21&linkId=40bb211f585f6fb48dd5feecb261bd3f)
