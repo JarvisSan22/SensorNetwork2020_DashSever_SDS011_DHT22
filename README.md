@@ -2,20 +2,19 @@
 Author: Danien Jarvis
 Contacts:  jarvissan21@gmail.com
 
-Successo to [SDS-011-Python](https://github.com/JarvisSan22/SDS-011-Python)
+Successor to [SDS-011-Python](https://github.com/JarvisSan22/SDS-011-Python)
 Happy to recive feedback, and to implement contributions  
 
 Raspberry pi (RPI) or linux system base for a sensor network, of SDS011 and DHT22. 
 Network made up of ESP8266 Sensor nodes sending data to the network base over a local ip. 
 Using the previous code in [SDS-011-Python](https://github.com/JarvisSan22/SDS-011-Python), GPS maps walk and logger data can be run on a RPI 
-Network data i displated using plotly dash for a nice clean interface.
-
-
+Network data is displated using plotly dash for a nice clean interface.
 
 
 
 ![SDS-011](https://github.com/JarvisSan22/SDS-011-Python/blob/master/SDS011-setup.jpg)
-
+![DASH1](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/master/DASH1.png)
+![DASH2](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/master/DASH2.png)
 
 # Kit List 
 - [SDS011](https://www.amazon.co.uk/gp/product/B07D7BL33R/ref=as_li_tl?ie=UTF8&camp=1634&creative=6738&creativeASIN=B07D7BL33R&linkCode=as2&tag=jarvissan-21&linkId=40bb211f585f6fb48dd5feecb261bd3f)
@@ -130,6 +129,7 @@ su
 gpsmon -n
 ```
 
+# Options
 
 # Blinkt set up install
 
