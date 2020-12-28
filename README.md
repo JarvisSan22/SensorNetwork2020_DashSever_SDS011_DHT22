@@ -1,5 +1,5 @@
 # SensorNetwork20202_DashServer_SDS011_DHT22
-Author: Danien Jarvis
+Author: Daniel Jarvis
 Contacts:  jarvissan21@gmail.com
 Status : (Git instruction under construction, GITでマニュアルの作成中)
 
