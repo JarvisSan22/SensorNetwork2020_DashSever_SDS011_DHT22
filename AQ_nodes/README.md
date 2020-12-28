@@ -4,7 +4,7 @@
 - [DHT22-Flasknode.ino] ESP8266_DHT22 NODE
 
 
-** ESP8266_DHT22 NODE SETUP**
+**ESP8266_DHT22 NODE SETUP**
 *Software*
 https://www.arduino.cc/en/software
 
