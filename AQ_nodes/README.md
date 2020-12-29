@@ -1,37 +1,45 @@
+<div align="center">
+<img src="./assets/logo.svg" width="50%">
+</div>
+
+ [English](/README-jp.md)/[日本語](/README-jp.md)
 # AQ_nodes
 
-## Current Nodes
+### Current Nodes
 - [DHT22-Flasknode.ino] ESP8266_DHT22 NODE
 
 
-**ESP8266_DHT22 NODE SETUP**
-*Software*
+#### ESP8266_DHT22 NODE SETUP
+- **Software**
 https://www.arduino.cc/en/software
 
 1. ESP8266 board install 
 First the EPS866 board need to be installed on Arduino
 まず Adduinoでは、EPS866のボルドはインストールしなければなりません。
 
-@File> Preferences@
+**File> Preferences**
 Add the past the followng line in Additional Boards Managers URLs;
 追加のボードマネージャのURLの空間では、下記のURLを貼り付けます。
 https://arduino.esp8266.com/stable/package_esp8266com_index.json
 ![DHT22_ARDUINO_INSTALL](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/DHT22_ARDUINO_INSTALL.jpg)
 
-Now to load the board, in Boards Manager
+2. Now to load the board, in Boards Manager
 Tools > Board > Boards Manager…
+//
 Then type eps8266 and install the board.
+//
 今　ボードマネージャでは、ボードを読み込みましょう。
 シール＞ボード＞ボードマネージャ
 そこで、eps8266を書いて、ボードをインストールをしてください。
-![Board_Manger_eps_JP](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Manger_eps_JP.jpg)
-![Board_Manger_JP](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Manger_JP.jpg)
-
-Lastely we have to select the board
+//
+![Board_Manger_eps_JP](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Manger_eps_JP.png)
+![Board_Manger_JP](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Manger_JP.png)
+w
+3. Lastely we have to select the board
 Tools>Boards: >  Generic ESP8266 Module 
 最後にボードを選択しましょう。
 ツール＞ボード>Generic ESP8266 Module 
-
+![Board Select](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_select.png)
 
 
 
