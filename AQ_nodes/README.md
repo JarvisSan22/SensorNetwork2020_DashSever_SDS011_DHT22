@@ -11,41 +11,39 @@
 - **Software**
 https://www.arduino.cc/en/software
 
-1. ESP8266 board install
-First the EPS866 board need to be installed on Arduino
+1. ESP8266 board install \
+First the EPS866 board need to be installed on Arduino \
 まず Adduinoでは、EPS866のボルドはインストールしなければなりません。
 
 **File> Preferences**
-Add the past the followng line in Additional Boards Managers URLs;
-追加のボードマネージャのURLの空間では、下記のURLを貼り付けます。
+Add the past the followng line in Additional Boards Managers URLs \
+追加のボードマネージャのURLの空間では、下記のURLを貼り付けます。\
 https://arduino.esp8266.com/stable/package_esp8266com_index.json
 
-/
-Now to load the board, in Boards Manager/
-Tools > Board > Boards Manager…
-/
-Then type eps8266 and install the board.
-//
-今　ボードマネージャでは、ボードを読み込みましょう。
-シール＞ボード＞ボードマネージャ
-そこで、eps8266を書いて、ボードをインストールをしてください。
-//
+
+Now to load the board, in Boards Manager \
+Tools > Board > Boards Manager…\
+
+Then type eps8266 and install the board. \
+今　ボードマネージャでは、ボードを読み込みましょう。\
+シール＞ボード＞ボードマネージャ \
+そこで、eps8266を書いて、ボードをインストールをしてください。 \
 ![Board_Manger_eps_JP](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Manger_eps_JP.png)
-![Board_Manger_JP](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Manger_JP.png)
+![Board_Manger_JP](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Manager_JP.png)
 
 2. Board select ボードを選択
 Lastely we have to select the board
 Tools>Boards: >  Generic ESP8266 Module 
 最後にボードを選択しましょう。
 ツール＞ボード>Generic ESP8266 Module 
-![Board Select](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_select.png)
+![Board Select](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Board_Select_JP.png)
 
 3. DHT22 Set up  DHT22の設定
 Select the libary manager, search for DHT22 and install "DHT sensor libary by Adafruit"\
 Tools> Libary mangager\
 ライブラリ整理を選択して、「DHT22」を探索して、 "DHT sensor libary by Adafruit"をインストールしてください。
 ツール>ライブラリ整理
-![DHT22_ARDUINO_INSTALL](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/DHT22_ARDUINO_INSTALL.jpgs)
+![DHT22_ARDUINO_INSTALL](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/DHT22_ARDUINO_INSTALL.jpg)
 
 
 4. Code set up コードのセットアップする
