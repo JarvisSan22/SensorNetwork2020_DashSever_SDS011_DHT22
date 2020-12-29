@@ -52,7 +52,7 @@ Tools> Libary mangager\
 Internet credention, data reciver ip, location of sensors and DHT22 pin need to be altered or checked.//
 インタネットの設定、データを受信器のIP、センターのところの名と DHT22のポートを更新し確認します。/
 
-'''
+```C++
 // Replace with your network credentials
 const char* ssid = "{ Internet name}";
 const char* password = "{Internet password}";
@@ -64,7 +64,7 @@ String url = "";
 IPAddress ip;                    // Gets IP address of your node
 //unsigned long time;
 #define DHTPIN 5     // Digital pin connected to the DHT sensor
-'''
+```
 
 
 
