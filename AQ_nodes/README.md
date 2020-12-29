@@ -41,14 +41,14 @@ Tools>Boards: >  Generic ESP8266 Module
 3. DHT22 Set up  DHT22の設定
 Select the libary manager, search for DHT22 and install "DHT sensor libary by Adafruit"\
 Tools> Libary mangager\
-ライブラリ整理を選択して、「DHT22」を探索して、 "DHT sensor libary by Adafruit"をインストールしてください。
-ツール>ライブラリ整理
+ライブラリ整理を選択して、「DHT22」を探索して、 "DHT sensor libary by Adafruit"をインストールしてください。\
+ツール>ライブラリ整理 \
 ![DHT22_ARDUINO_INSTALL](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/DHT22_ARDUINO_INSTALL.jpg)
 
 
 4. Code set up コードのセットアップする
-Internet credention, data reciver ip, location of sensors and DHT22 pin need to be altered or checked.//
-インタネットの設定、データを受信器のIP、センターのところの名と DHT22のポートを更新し確認します。/
+Internet credention, data reciver ip, location of sensors and DHT22 pin need to be altered or checked.\
+インタネットの設定、データを受信器のIP、センターのところの名と DHT22のポートを更新し確認します。\
 
 ```C++
 // Replace with your network credentials
@@ -64,8 +64,25 @@ IPAddress ip;                    // Gets IP address of your node
 #define DHTPIN 5     // Digital pin connected to the DHT sensor
 ```
 
+5. Upload code to node　ノードでコードを書き込み
+Plug in the ESP8266 node. \
+Make sure the correct port is selected in tools>serial port/ 
+Then click the arrow button to upload the code to the node\
+ESP8266のノードをパソコンに接続する \
+正しいシリアルポートを選択することを確認するために、「ツール＞シリアルポート」を見てください。\
+右向き矢を押し、ノードを書き込みます。\
 
 
+![run](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/Run.png)
+Check it all working but looking in the serial moniter, by clicking the magnifeing glass \
+活動を確認するために、シリアルのモニターの画面を見てください。虫眼鏡のボットンを押してください。\
+![Serial](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/SerialMoniter.png)
+![Check](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/AQ_nodes/SerialCheck.png)
+
+  ##### Errors エラー
+  If it cant readthe serial port, first check the usb cable, if the error contines update your PC serial driver\
+  https://www.youtube.com/watch?v=Pv6MnawdCjA
+  
 
 #### Refrences 参考 /
 
