@@ -9,27 +9,40 @@
  ## dash_server.py
  #### "plotly dashed" based data plotter (https://plotly.com/dash/)
  ##### Set up: 
- data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
+ 
+ Termial commands  update and install the needed software. 
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install xsel xclip libxml2-dev libxslt-dev python-lxml python-h5py python-numexpr python-dateutil python-six python-tz python-bs4 python-html5lib python-openpyxl python-tables python-xlrd python-xlwt cython python-sqlalchemy python-xlsxwriter python-jinja2 python-boto python-gflags python-googleapi python-httplib2 python-zmq libspatialindex-dev
+sudo pip install bottleneck rtree
+sudo apt-get install python-numpy python-matplotlib python-mpltoolkits.basemap python-scipy python-sklearn python-statsmodels python-pandas
+pip install flask
+pip install codecs
+pip install dash
+```
+
+data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
 Termianl update comand: \
 ```
 sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py 
 ```
 
-Manual edit comand: \
+Manual edit comand: 
 
 ```
 nano data_reciver.py 
 ```
 
- ###### Run: \
+ ###### Run: 
  ```
 python {SaveLoc}/AQ_Plot_server/data_server.py 
  ```
- ###### Decription: \
+ ###### Decription: 
  
 ## data_reciver.py
 #### "Flask" date reciver. \ 
-##### Set up:\
+##### Set up: 
 data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
 Termianl update comand: \
 
