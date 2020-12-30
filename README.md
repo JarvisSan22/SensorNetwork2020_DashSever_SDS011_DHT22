@@ -12,8 +12,6 @@ Using the previous code in [SDS-011-Python](https://github.com/JarvisSan22/SDS-0
 Network data is displated using plotly dash for a nice clean interface.
 
 
-
-![SDS-011](https://github.com/JarvisSan22/SDS-011-Python/blob/master/SDS011-setup.jpg)
 ![DASH1](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/Dash1.png)
 ![DASH2](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/Dash2.png)
 
