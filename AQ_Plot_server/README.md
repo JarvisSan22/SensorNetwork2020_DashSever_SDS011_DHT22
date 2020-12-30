@@ -17,7 +17,7 @@ Example: \
  {IP}/data/NODE1-Testloc/T,18,RH,80,{Node IP} 
  ```
 This will create a new file "Testloc_NODE1_YYYYMMDDHHMMSS", if the file aready exist, the new data will append to the file. \
-Note as long as the <nodedata> is in a "{column name},{column data}, {column name},{column data},{IP}" format, diffrent types of data can be recived (not just Temp and RH). 
+Note as long as the <nodedata> is in a "{column name},{column data}, {column name},{column data},{IP}" format, diffrent types of data can be recived (not just Temp and RH).  \
 Aditional more than 2 data types can be recived as long as the last 
 
 ```python
