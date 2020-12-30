@@ -6,16 +6,36 @@
    - **MultiPage**
      - 2 **Dash_GPSmap_server.py** {Plotly Dash, with pages for sensor network and GPS maps}
  
-## Data_reciver.py
-"Flask" date reciver. \ 
-Input: \
+ ## dash_server.py
+ "plotly dashed" based data plotter (https://plotly.com/dash/)
+ 
+ 
+## data_reciver.py
+#### "Flask" date reciver. \ 
+#####Set up:\
+data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
+Termianl update comand: \
+```
+sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py \
+```
+Manual edit comand: \
+```
+nano data_reciver.py 
+```
+
+###### Input: \
 ```
 {IP}/data/<nodeinfo>/<nodedata>/ 
 ```
-Example: \
+##### Example: \
 ```
  {IP}/data/NODE1-Testloc/T,18,RH,80,{Node IP} 
  ```
+ ###### Run: \
+ ```
+python {SaveLoc}/AQ_Plot_server.py 
+ ```
+ ###### Decription: \
 This will create a new file "Testloc_NODE1_YYYYMMDDHHMMSS", if the file aready exist, the new data will append to the file. \
 Note as long as the <nodedata> is in a "{column name},{column data}, {column name},{column data},{IP}" format, diffrent types of data can be recived (not just Temp and RH).  \
 Aditional more than 2 data types can be recived as long as the last 
