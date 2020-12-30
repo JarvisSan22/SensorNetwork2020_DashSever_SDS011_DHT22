@@ -7,13 +7,9 @@
      - 2 **Dash_GPSmap_server.py** {Plotly Dash, with pages for sensor network and GPS maps}
  
  ## dash_server.py
- "plotly dashed" based data plotter (https://plotly.com/dash/)
- 
- 
-## data_reciver.py
-#### "Flask" date reciver. \ 
-#####Set up:\
-data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
+ #### "plotly dashed" based data plotter (https://plotly.com/dash/)
+ ##### Set up: \
+ data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
 Termianl update comand: \
 ```
 sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py \
@@ -23,6 +19,27 @@ Manual edit comand: \
 nano data_reciver.py 
 ```
 
+ ###### Run: \
+ ```
+python {SaveLoc}/AQ_Plot_server/data_server.py 
+
+ ###### Decription: \
+ 
+ 
+## data_reciver.py
+#### "Flask" date reciver. \ 
+##### Set up:\
+data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
+Termianl update comand: \
+```
+sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py \
+```
+Manual edit comand: \
+```
+nano data_reciver.py 
+```
+###### Run: \
+ sudo python {SaveLoc}/AQ_Plot_server/data_reciver.py
 ###### Input: \
 ```
 {IP}/data/<nodeinfo>/<nodedata>/ 
@@ -35,6 +52,8 @@ nano data_reciver.py
  ```
 python {SaveLoc}/AQ_Plot_server.py 
  ```
+ After running take note of the ip. Use this for the Nodes https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/tree/main/AQ_nodes
+ 
  ###### Decription: \
 This will create a new file "Testloc_NODE1_YYYYMMDDHHMMSS", if the file aready exist, the new data will append to the file. \
 Note as long as the <nodedata> is in a "{column name},{column data}, {column name},{column data},{IP}" format, diffrent types of data can be recived (not just Temp and RH).  \
