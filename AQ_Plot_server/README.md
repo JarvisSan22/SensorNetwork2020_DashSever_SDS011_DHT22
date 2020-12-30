@@ -16,7 +16,7 @@ This will create a new file "Testloc_NODE1_YYYYMMDDHHMMSS", if the file aready e
 Note as long as the <nodedata> is in a "{column name},{column data}, {column name},{column data},{IP}" format, diffrent types of data can be recived (not just Temp and RH). \
 Aditional more than 2 data types can be recived as long as the last \
 
-'''Python
+```python
 #Data Reciver   ---------------------------------------------------------------------
 @app.route("/data/<nodeinfo>/<nodedata>")
 def recivedata(nodeinfo, nodedata):
@@ -57,4 +57,4 @@ def recivedata(nodeinfo, nodedata):
     #Plot data 
     return "Done"
 
-'''
+```
