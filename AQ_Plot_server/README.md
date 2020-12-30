@@ -8,13 +8,15 @@
  
  ## dash_server.py
  #### "plotly dashed" based data plotter (https://plotly.com/dash/)
- ##### Set up: \
+ ##### Set up: 
  data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
 Termianl update comand: \
 ```
-sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py \
+sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py 
 ```
+
 Manual edit comand: \
+
 ```
 nano data_reciver.py 
 ```
@@ -22,25 +24,28 @@ nano data_reciver.py
  ###### Run: \
  ```
 python {SaveLoc}/AQ_Plot_server/data_server.py 
-
+ ```
  ###### Decription: \
- 
  
 ## data_reciver.py
 #### "Flask" date reciver. \ 
 ##### Set up:\
 data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
 Termianl update comand: \
+
 ```
 sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py \
 ```
+
 Manual edit comand: \
 ```
 nano data_reciver.py 
 ```
+
 ###### Run: \
  sudo python {SaveLoc}/AQ_Plot_server/data_reciver.py
 ###### Input: \
+
 ```
 {IP}/data/<nodeinfo>/<nodedata>/ 
 ```
@@ -48,6 +53,7 @@ nano data_reciver.py
 ```
  {IP}/data/NODE1-Testloc/T,18,RH,80,{Node IP} 
  ```
+ 
  ###### Run: \
  ```
 python {SaveLoc}/AQ_Plot_server.py 
