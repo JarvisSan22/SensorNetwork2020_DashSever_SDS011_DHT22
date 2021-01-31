@@ -1,7 +1,10 @@
-# SensorNetwork20202_DashServer_SDS011_DHT22
+# SensorNetwork2020_DashServer_SDS011_DHT22
 Author: Daniel Jarvis
 Contacts:  jarvissan21@gmail.com
-Status : (Git instruction under construction, GITでマニュアルの作成中)
+
+# Status : (Git instruction under construction, GITでマニュアルの作成中)
+# 2021/01/31 The Readme is currently a bit of a mess, but will get it sorted and updated by the end of the month 
+# 2021 GOAL:  Create sensors interface with all option able to be changed in the interace. 
 
 Successor to [SDS-011-Python](https://github.com/JarvisSan22/SDS-011-Python)
 Happy to recive feedback, and to implement contributions  
