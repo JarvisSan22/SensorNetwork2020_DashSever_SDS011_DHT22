@@ -9,6 +9,9 @@ import struct
 import datetime
 import sys
 import os.path
+sys.path.append("..") #Import varaibles in run from AQ_Plot_server directory 
+sys.path.append(sys.path[0][0:sys.path[0].find("AQ_run")]) #Import varaiblesif run from home directory 
+
 import variables as V
 
 if V.DHTON=="ON":
@@ -20,18 +23,16 @@ if MODE=="GPS":
 if V.BLINKT=="ON":
     from blinkt import set_pixel, set_brightness, show, clear
     
-    
-    
 from sds_rec import SDS011 as sds
 
 
   
 #Gloabl varaibles
-FOLDER=V.FOLDER #Folder location for data save
+FOLDER=V.DATAFOLDER #Folder location for data save
 LOCATION=V.LOC[0] #RPI3 operation location
 lat=V.LOC[1]#location latatuide
 lon=V.LOC[2]#location longatuide
-RPI=V.RPINAME
+RPI=V.DEVICERAN
 def initFile(date,RPI,FOLDER,LOCATION,SENSORS):
     #create columes depending on sensors and OPRATION
     columns="time"
@@ -85,7 +86,7 @@ if __name__ == "__main__":
     if V.DHTON=="ON":
         for DHTN in V.DHTNAMES:
             runsen.append(DHTN)
-    print(V.RPINAME, " Starting in Mode: ",V.MODE, "Sensors:", V.RUNSEN," Time: ", datetime.datetime.now(),"Location:",V.LOC[0])
+    print(RPI, " Starting in Mode: ",V.MODE, "Sensors:", V.RUNSEN," Time: ", datetime.datetime.now(),"Location:",V.LOC[0])
     inter=V.integration#Interval time between readings 
    
     P=V.RUNPORT

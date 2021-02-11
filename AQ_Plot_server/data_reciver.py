@@ -3,6 +3,12 @@ from __future__ import print_function
 import datetime
 import os
 import sys
+
+sys.path.append(".") #Import varaibles in run from AQ_Plot_server directory 
+sys.path.append(sys.path[0][0:sys.path[0].find("AQ_Plot_server")]) #Import varaiblesif run from home directory 
+
+import variables as V
+
 import glob
 import time
 import csv
@@ -17,7 +23,9 @@ import matplotlib.dates as mdates
 import datetime 
 import psutil # to check the sensors are running 
 
-dataloc="/home/pi/SDS-011-Python/AQ_run/data/"
+dataloc=V.DATAFOLDER
+IP=V.IP
+
 
 def createfile(filename,nodename,nodedata,nodeip):
     """
@@ -49,11 +57,6 @@ def createfile(filename,nodename,nodedata,nodeip):
 
 
 app = Flask(__name__) 
-
-
-
-
-
   
 #Data Reciver   ---------------------------------------------------------------------
 @app.route("/data/<nodeinfo>/<nodedata>")
@@ -103,4 +106,5 @@ def recivedata(nodeinfo, nodedata):
 
 #run 
 if __name__ == '__main__':
-  app.run(host='192.168.43.50', port=8090,debug=True)
+    print("Reciver IP:",IP,":8090")
+    app.run(host=IP, port=8090,debug=True)

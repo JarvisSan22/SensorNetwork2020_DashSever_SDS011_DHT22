@@ -9,13 +9,15 @@ import socket as SOCK #to check ip
 import ntplib #to check the time to a internet serva
 import os #to chage system setting
 import psutil # to check the sensors are running 
+sys.path.append("..") #Import varaibles in run from AQ_Plot_server directory 
+sys.path.append(sys.path[0][0:sys.path[0].find("AQ_run")]) #Import varaiblesif run from home directory
 import variables as V #IMport the file names, you dont want to type them out
 
 url=V.URL
 run="start.py"
-FOLDER=V.FOLDER
-LOCATION = V.LOCATION
-RPI=V.RPINAME
+FOLDER=V.DATAFOLDER
+LOCATION = V.LOC[0]
+RPI=V.DEVICERAN
 #Test for WIFI status is working
 def wificheck(url):
 #check wifif by checking if the upload url can be accessed 

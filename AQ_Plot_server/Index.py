@@ -2,11 +2,14 @@ from __future__ import print_function
 import datetime
 import os
 import sys
+sys.path.append(".") #Import varaibles in run from AQ_Plot_server directory 
+sys.path.append(sys.path[0][0:sys.path[0].find("AQ_Plot_server")]) #Import varaiblesif run from home directory 
+
+import variables as V
 import glob
 import time
 import csv
 from flask import Flask , render_template, send_file, make_response, request, url_for
-
 import pandas as pd
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -19,7 +22,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-
+import sys
 
 def convertList(l):
     newlist = []
@@ -246,90 +249,89 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets,suppress_callback_exceptions=True)
 
 
-dataloc="/home/pi/SDS-011-Python/rpiWebServer/data/"
+dataloc=V.DATAFOLDER #"/home/pi/SDS-011-Python/rpiWebServer/data/"
+IType=V.Type #Interface  type
+DName=V.DEVICERAN
+IPrecive=V.IP
+Today=datetime.date.today()
+print(Today)
 
-
-
-today=datetime.date.today()
-print(today)
 #Get Data
 Dataset,columns,days=getdata(dataloc)
-#global Dataset
-global days
-#Create Val select option dicts 
-valoptions=[]
-for val in columns:
-    valoptions.append({"label":val,"value":val})
 #print(valoptions)
 #StatusBox=StatueBoxes(Dataset) Error
 
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
+    html.H3(id="Today", children=str(Today)),
+    html.H3("Home:"+DName+ "Reciver IP:"+IPrecive),
     html.Div(id='page-content')
 ])
 
 
-
-DASH_layout = html.Div(children=[ 
-    html.H1("Sensor DASH"),   
-    html.Nav(className = "nav nav-pills",id="submit-button", children=[
-    dcc.Link(html.Button('Sensor Dash', className="nav-item nav-link btn", n_clicks=0),href='/'),
-     dcc.Link(html.Button('GPS Map',className="nav-item nav-link active btn", n_clicks=0),href='/gpsmap'), 
+def CreateDASHLAYOUT(dataloc):
+  #Create Val select option dicts 
+  valoptions=[]
+  for val in columns:
+      valoptions.append({"label":val,"value":val})
+  global IType
+  if IType.lower() =="multi":
+      TOption=html.Nav(className = "nav nav-pills",id="submit-button", children=[
+      dcc.Link(html.Button('Sensor Dash', className="nav-item nav-link btn", n_clicks=0),href='/'),
+       dcc.Link(html.Button('GPS Map',className="nav-item nav-link active btn", n_clicks=0),href='/gpsmap'), 
+      ])
+  else:
+      TOption=html.H1("Time series")
+  
+  
+  DASH_layout = html.Div(children=[ 
+      html.H1("Sensor DASH"),   
+      TOption,
+      dcc.DatePickerRange(
+          id='day-picker',
+          start_date=days[~0],
+          end_date=days[~0],
+          min_date_allowed=days[0],
+          max_date_allowed=days[~0]+datetime.timedelta(days=1),
+          display_format='D MMM YYYY'
+      ),
+      dcc.Dropdown(id="val-select",
+      options=valoptions,
+      value=columns[0]),
+      dcc.Graph(id='graph-with-slider'), 
+     # dcc.Markdown(children=StatusBox),
+     ], style={'textAlign': 'center'})
+  return DASH_layout #,Dataset,columns,days
+  
+if IType.lower() =="multi":
+  GPS_layout =  html.Div([
+     html.H1("GPS MAP"),
+     html.Nav(className = "nav nav-pills",id="submit-button", children=[
+     dcc.Link(html.Button('Sensor Dash', className="nav-item nav-link btn", n_clicks=0),href='/'),
+       dcc.Link(html.Button('GPS Map',className="nav-item nav-link active btn", n_clicks=0),href='/gpsmap'), 
     ]),
-    dcc.DatePickerRange(
-        id='day-picker',
-        start_date=days[~0],
-        end_date=days[~0],
-        min_date_allowed=days[0],
-        max_date_allowed=days[~0]+datetime.timedelta(days=1),
-        display_format='D MMM YYYY'
-    ),
-    dcc.Dropdown(id="val-select",
-    options=valoptions,
-    value=columns[0]),
-    dcc.Graph(id='graph-with-slider'), 
-   # dcc.Markdown(children=StatusBox),
-   ], style={'textAlign': 'center'})
+    html.Iframe(src=app.get_asset_url('GPS_MAP.html'),width="100%",height="500")
+    ], style={'textAlign': 'center'}) 
+  
+  
+  # Update the index
+@app.callback(Output('page-content', 'children'),
+              [Input('url', 'pathname'),Input('Today','children')])
+def display_page(pathname,Today):
 
-
-GPSMAPLOC="/home/pi/SDS-011-Python/AQ-Plot/GPS_MAP.html"
-GPS_layout =  html.Div([
-   html.H1("GPS MAP"),
-   html.Nav(className = "nav nav-pills",id="submit-button", children=[
-    dcc.Link(html.Button('Sensor Dash', className="nav-item nav-link btn", n_clicks=0),href='/'),
-     dcc.Link(html.Button('GPS Map',className="nav-item nav-link active btn", n_clicks=0),href='/gpsmap'), 
-  ]),
-  html.Iframe(src=app.get_asset_url('GPS_MAP.html'),width="100%",height="500")
-  ], style={'textAlign': 'center'}) 
-
-
-
-
-
-# Update the index
-@app.callback(dash.dependencies.Output('page-content', 'children'),
-              [dash.dependencies.Input('url', 'pathname')])
-def display_page(pathname):
     if pathname == '/gpsmap':
         return GPS_layout
     else:
-        return DASH_layout
-    # You could also return a 404 "URL not found" page here
-
-
-
-"""
-@app.callback(dash.dependencies.Output('page-content', 'children'),
-??????????????[dash.dependencies.Input('url', 'pathname')])
-def display_page(pathname):
-????if pathname == 'index':
-????????return page_1_layout
-????elif pathname == 'GpsPage':
-????????return page_2_layout
-????else:
-????????return index_page
-"""
-
+        if Today!=datetime.date.today():
+            Today=datetime.date.today()
+            print(Today)
+            DASH_layout=CreateDASHLAYOUT(dataloc)
+        else:
+          
+          DASH_layout=CreateDASHLAYOUT(dataloc)
+          
+        return DASH_layout  
+   
 
 @app.callback(
     Output('graph-with-slider', 'figure'),
@@ -337,12 +339,12 @@ def display_page(pathname):
     )    
 def update_figure(start_day,end_day,val):
     print("Plot date range:",start_day,":",end_day)
-    #Dataset,columns,days=getdata(dataloc)
+    global Dataset,days,columns,dataloc
     dataset,columnsoptions,days=UpdateData(dataloc,Dataset,columns,days)
-    global days
+    
     traces = []
     #val="DHT-T"
-    for loc, df in dataset.items():
+    for loc, df in Dataset.items():
        # print(selected_day)
       #  sday=datetime.datetime.strptime(selected_day,"%Y-%m-%d")
         #print(df[sday])
@@ -375,7 +377,7 @@ def update_figure(start_day,end_day,val):
           
     #print(traces)
     Dataset=dataset
-    global Dataset
+    #global Dataset,columns,days
 
     return {
         'data': traces,
@@ -390,7 +392,7 @@ def update_figure(start_day,end_day,val):
     }
    
 if __name__ == '__main__':
-    app.run_server(debug=True,host="192.168.43.50",port=5000)
+    app.run_server(debug=True,host=IPrecive,port=5000)
 
 
 
