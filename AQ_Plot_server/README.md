@@ -22,8 +22,8 @@ pip install codecs
 pip install dash
 ```
 
-data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
-Termianl update comand: \
+data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) 
+Termianl update comand: 
 ```
 sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py 
 ```
@@ -41,41 +41,41 @@ python {SaveLoc}/AQ_Plot_server/data_server.py
  ###### Decription: 
  
 ## data_reciver.py
-#### "Flask" date reciver. \ 
+#### "Flask" date reciver. 
 ##### Set up: 
-data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) \
-Termianl update comand: \
+data location need to be updated from defult (/home/pi/SDS-011-Python/AQ_run/data/) 
+Termianl update comand: 
 
 ```
-sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py \
+sed -i s/"/home/pi/SDS-011-Python/AQ_run/data/"/"{Data loc}"/g　data_reciver.py 
 ```
 
-Manual edit comand: \
+Manual edit comand: 
 ```
 nano data_reciver.py 
 ```
 
-###### Run: \
+###### Run: 
  sudo python {SaveLoc}/AQ_Plot_server/data_reciver.py
-###### Input: \
+###### Input: 
 
 ```
 {IP}/data/<nodeinfo>/<nodedata>/ 
 ```
-##### Example: \
+##### Example: 
 ```
  {IP}/data/NODE1-Testloc/T,18,RH,80,{Node IP} 
  ```
  
- ###### Run: \
+ ###### Run: 
  ```
 python {SaveLoc}/AQ_Plot_server.py 
  ```
  After running take note of the ip. Use this for the Nodes https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/tree/main/AQ_nodes
  
- ###### Decription: \
-This will create a new file "Testloc_NODE1_YYYYMMDDHHMMSS", if the file aready exist, the new data will append to the file. \
-Note as long as the <nodedata> is in a "{column name},{column data}, {column name},{column data},{IP}" format, diffrent types of data can be recived (not just Temp and RH).  \
+ ###### Decription: 
+This will create a new file "Testloc_NODE1_YYYYMMDDHHMMSS", if the file aready exist, the new data will append to the file. 
+Note as long as the <nodedata> is in a "{column name},{column data}, {column name},{column data},{IP}" format, diffrent types of data can be recived (not just Temp and RH).  
 Aditional more than 2 data types can be recived as long as the last 
 
 ```python
