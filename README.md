@@ -19,15 +19,12 @@ Network data is displated using plotly dash for a nice clean interface.
 ![DASH2](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/Dash2.png)
 
 # Kit List 
-- [SDS011]
-- [RPI3]
-- [GPS]
-- [DHT22]
-- [ESP8266]
-- [Battery Pack]
+- Logger/reciver and server host Pi  [SDS011]+[RPI3/4]+ [DHT22] 
+- sensor Node [ESP8266] + [DHT22]
+- GPSLogger  [SDS011]+[RPI3/4]+ [DHT22] +[Battery Pack] [GPS]
 
  
-RPI3 2019 Setup Video 2019, for previous  
+## Old RPI3 Setup Video 2019
 [Set up Video](https://www.youtube.com/watch?v=fvaiyqwaWeM)
 
 
