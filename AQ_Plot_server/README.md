@@ -1,6 +1,6 @@
  [English](/README.md)/[日本語](/README-jp.md)
  
-# **AQ_Plot_server** ( Data reciver and Plotly Interface, see this reposity for set up details  )
+# **AQ_Plot_server** ( Data reciver and Plotly Interface and set up details  )
    - **dash_server.py** {Plotly Dash, base sensor network interface}
    - **data_reciver.py** {Flask node data reciver code}
    - **MultiPage**
