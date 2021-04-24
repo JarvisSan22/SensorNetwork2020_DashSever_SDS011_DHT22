@@ -19,7 +19,7 @@ Network data is displated using plotly dash for a nice clean interface.
 ![DASH2](https://github.com/JarvisSan22/SensorNetwork2020_DashServer_SDS011_DHT22/blob/main/Dash2.png)
 
 # Kit List Repository Strucutre 
-'''bash
+```bash
 ─ AQ_Plot
 │   ├── AQMapfunctions.py
 │   ├── AQfunctions_Archive_2019.py
@@ -40,7 +40,7 @@ Network data is displated using plotly dash for a nice clean interface.
 │   ├── data/
 │   start.py
 │   variables_temp.py
-'''
+```
 
 # Kit List 
 - Logger/reciver and server host Pi  [SDS011]+[RPI3/4]+ [DHT22] 
