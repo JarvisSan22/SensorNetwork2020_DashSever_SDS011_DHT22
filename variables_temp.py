@@ -19,7 +19,7 @@ LOC=['Home','', '']
 
 #Server display settings "single":Just time series . "multi" Time series and GPS map
 Type="multi"
-TimeSeries="False" #True date range select #False Single data file select 
+TimeSeries=False #True date range select #False Single data file select 
 GPSMAPLOC=os.path.join(os.getcwd(),"AQ_Plot","GPS_MAP.html")
 
 
