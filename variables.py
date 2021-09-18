@@ -1,26 +1,31 @@
 # -*- coding: utf-8 -*-
 """
-Created on 2021/02/11 Updated 2021/09/18
+Created on 2021/09/18
 @author: Daniel Jarvis
 """
+
 import os 
 import socket 
 #Basesettings
 os.getcwd()
 
-DATAFOLDER=os.path.join(os.getcwd(),"AQ_run","data")
-RUNFOLDER=os.path.join(os.getcwd(),"AQ_run","Scripts") #r"C:\Users\jarvi\Documents\PythonScripts\SensorNetwork2021_DashServer_SDS011_DHT22\AQ_run\Scripts"
+#DATAFOLDER=os.path.join(".","AQ_run","data","")
+#RUNFOLDER=os.path.join(".","AQ_run","Scripts","") 
+DATAFOLDER=r"C:\Users\jarvi\Documents\PythonScripts\SensorNetwork2021_DashServer_SDS011_DHT22\AQ_run\data"
+RUNFOLDER=r"C:\Users\jarvi\Documents\PythonScripts\SensorNetwork2021_DashServer_SDS011_DHT22\AQ_run\Scripts"
 
+
+
+#r"C:\Users\jarvi\Documents\PythonScripts\SensorNetwork2021_DashServer_SDS011_DHT22\AQ_run\Scripts"
 SERVERFOLDER=""
 DEVICERAN="RPI"
 #LOC=['Location Name','lat', 'lon'] 
 LOC=['Home','', ''] 
 
-
 #Server display settings "single":Just time series . "multi" Time series and GPS map
 Type="multi"
-TimeSeries="False" #True date range select #False Single data file select 
-GPSMAPLOC=os.path.join(os.getcwd(),"AQ_Plot","GPS_MAP.html")
+TimeSeries=False #True date range select #False Single data file select 
+GPSMAPLOC=r"C:\Users\jarvi\Documents\PythonScripts\SensorNetwork2021_DashServer_SDS011_DHT22\AQ_Plot\GPS_MAP.html"
 
 
 #Check internet connect, URL to ping
@@ -54,7 +59,6 @@ LIGHT="OFF" #LEDS option
 LIGHTPIN=[]
 BLINKT="OFF"  #BLINkt hat option (Cant fit DHT22 with the BLINKET Hat)
 PMVALUE=[10,20,30]  #Set intevals for light colors 
-
 
 #IP SETTINGS 
 # ホスト名を取得 #Get host name 

@@ -1,0 +1,5 @@
+folium==0.12.1
+vincent==0.4.4
+mpld3==0.5.5
+flask
+dash==2.0.0

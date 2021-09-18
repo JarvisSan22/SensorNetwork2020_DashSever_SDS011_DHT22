@@ -114,19 +114,26 @@ def getdate(loc):
 def getdata(loc):
     
   #Get data files
-  print("Date get ",loc) 
+ # print("Date get ",loc) 
   datafiles=glob.glob(loc+"****.csv")
   #print(datafiles)
   #Get nodes 
-  nodes=list(d.split("/")[~0].split("_")[0] for d in datafiles)
-  nodes=list(dict.fromkeys(nodes))
-  #print(nodes)
+  
+  #node_dates=list(os.path.normpath(d).split(os.sep)[~0].split("_")[~0][:~0-3] for d in datafiles)
+  if V.TimeSeries:
+      nodes=list(os.path.normpath(d).split(os.sep)[~0].split("_")[0] for d in datafiles)
+      nodes=list(dict.fromkeys(nodes))
+  else:
+      nodes=list([os.path.basename(f) for f in datafiles])
+      
+
+#  print(nodes)
   Dataset={}
   columnsoptions=[]
   badcols=[]
   days=[]
   for node in nodes:
-      print('Node;',node)
+   #   print('Node;',node)
       data=pd.DataFrame()
       for file in datafiles:
           if node in file.split("/")[~0]:
@@ -146,7 +153,7 @@ def getdata(loc):
                        if len(col.split("."))<3: #Skip IP
                          #print(col)
                          columnsoptions.append(col)
-                         print(columnsoptions)
+                         #print(columnsoptions)
                        else:
                          badcols.append(badcols)
                          
@@ -169,11 +176,11 @@ def getdata(loc):
   #print(days)
   #days=list([d.strftime("%Y-%m-%d") for d in days])
   #print(days)
-  print(columnsoptions)
+ # print(columnsoptions)
   return Dataset,columnsoptions,days
 
 def UpdateData(loc,Datasets,columnsoptions,days):
-  print("Update data ",loc) 
+ # print("Update data ",loc) 
   datafiles=glob.glob(loc+"****.csv")
   today=datetime.date.today().strftime('%Y-%m-%d')
   selectfiles=[]
@@ -244,16 +251,29 @@ def UpdateData(loc,Datasets,columnsoptions,days):
   #print(columnsoptions)
   return Datasets,columnsoptions,days
   
-def BaseLayout(days,valoptions,columns):
-    Base=html.Div([
-    dcc.DatePickerRange(
+def BaseLayout(days,valoptions,columns,data_locs):
+    
+    #Time series of Data file selct 
+    if V.TimeSeries:
+        timepicker= dcc.DatePickerRange(
         id='day-picker',
         start_date=days[~0],
         end_date=days[~0],
         min_date_allowed=days[0],
         max_date_allowed=days[~0]+datetime.timedelta(days=1),
         display_format='D MMM YYYY'
-    ),
+    )
+    
+    else:
+        timepicker= dcc.Dropdown(id="data-picker",
+        options=data_locs,
+        value=data_locs[0]["value"]
+     )
+    
+    #HTML 
+    Base=html.Div([
+    
+        timepicker,
     dcc.Dropdown(id="val-select",
     options=valoptions,
     value=columns[0] 
@@ -264,139 +284,239 @@ def BaseLayout(days,valoptions,columns):
     return Base
 
 
+def GenerateMultiLayouts(days,valoptions,columns,data_locs,GPSMAPLOC):
+    
+    
+    
+    if V.TimeSeries:
+        timepicker= dcc.DatePickerRange(
+        id='day-picker',
+        start_date=days[~0],
+        end_date=days[~0],
+        min_date_allowed=days[0],
+        max_date_allowed=days[~0]+datetime.timedelta(days=1),
+        display_format='D MMM YYYY'
+    )
+    
+    else:
+         timepicker= dcc.Dropdown(id="data-picker",
+        options=data_locs,
+        value=data_locs[0]["value"]
+        )
+        
+    
+    #HTML 
+    DASH_layout = html.Div(children=[ 
+    html.H1("Sensor DASH"),   
+    html.Nav(className = "nav nav-pills",id="submit-button", children=[
+    dcc.Link(html.Button('Sensor Dash', className="nav-item nav-link btn", n_clicks=0),href='/'),
+    dcc.Link(html.Button('GPS Map',className="nav-item nav-link active btn", n_clicks=0),href='/gpsmap'), 
+    ]),
+    
+    
+    
+    timepicker
+   
+    
+    ,
+    dcc.Dropdown(id="val-select",
+    options=valoptions,
+    value=columns[0]),
+    dcc.Graph(id='graph-with-slider'), 
+   # dcc.Markdown(children=StatusBox),
+   ], style={'textAlign': 'center'})
 
-class ThreadingTest(object):
-    """ Threading example class
-    The run() method will be started and it will run in the background
-    until the application exits.
-    """
 
-    def __init__(self, interval=3600):
-        """ Constructor
-        :type interval: int
-        :param interval: Check interval, in seconds
-        """
-        self.interval = interval
-
-        thread = threading.Thread(target=self.run, args=())
-        thread.daemon = True                            # Daemonize thread
-        thread.start()                                  # Start the execution
-
-    def run(self):
-        """ Method that runs forever """
-        now=datetime.date.today()
-        while True:
-            # Do something
-            #print(today)
-            if now!=today: #New Day
-              print("Newday ",now," Yesterday ", today)
-              today=now
-              today=datetime.date.today()
-              print(today)
-        #      global today
-              #Get Data First Iteraction
-              Dataset,columns,days=getdata(dataloc)
-              #global Dataset
-           #   global days
-              #Create Val select option dicts 
-              valoptions=[]
-              for val in columns:
-                  valoptions.append({"label":val,"value":val})
-              #print(valoptions)
-              #StatusBox=StatueBoxes(Dataset) Error
-              app.layout = BaseLayout(days,valoptions,columns)
+    
+    GPS_layout =  html.Div([
+       html.H1("GPS MAP"),
+       html.Nav(className = "nav nav-pills",id="submit-button", children=[
+        dcc.Link(html.Button('Sensor Dash', className="nav-item nav-link btn", n_clicks=0),href='/'),
+         dcc.Link(html.Button('GPS Map',className="nav-item nav-link active btn", n_clicks=0),href='/gpsmap'), 
+      ]),
+      html.Iframe(src=app.get_asset_url('GPS_MAP.html'),width="100%",height="500")
+      ], style={'textAlign': 'center'}) 
+    return DASH_layout, GPS_layout
 
 
-#print(days[0],days[~0])
-#Create Dash app
+
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 
-dataloc=V.DATAFOLDER+"/" #"/home/pi/SDS-011-Python/AQ_run/data/"
+dataloc=V.DATAFOLDER+"\\" #"/home/pi/SDS-011-Python/AQ_run/data/"
 today=datetime.date.today()
-print(today)
+#print(today)
 #global today
 #Get Data First Iteraction
 Dataset,columns,days=getdata(dataloc)
 #global Dataset
-#global days
+datalocs=list(Dataset.keys())
+
+datalocoptions=[]
+for loc in datalocs:
+    datalocoptions.append({"label":loc[:~0-3],"value":loc})
+
 #Create Val select option dicts 
 valoptions=[]
 for val in columns:
     valoptions.append({"label":val,"value":val})
 #print(valoptions)
 #StatusBox=StatueBoxes(Dataset) Error
+#print(days,valoptions,columns)
 
-app.layout = BaseLayout(days,valoptions,columns)
-ThreadingTest()
+#Tab types 
+if V.Type.lower()=="multi": #Time series & GPS 
+    app.layout = html.Div([
+        dcc.Location(id='url', refresh=False),
+        html.Div(id='page-content')
+])
+     
+    DASH_layout,GPS_layout= GenerateMultiLayouts(days,valoptions,columns,datalocoptions,GPSMAPLOC=V.GPSMAPLOC)
+     # Update the index
+    @app.callback(dash.dependencies.Output('page-content', 'children'),
+                  [dash.dependencies.Input('url', 'pathname')])
+    def display_page(pathname):
+        if pathname == '/gpsmap':
+            return GPS_layout
+        else:
+            return DASH_layout
+
+
+else: #Time series 
+    app.layout = BaseLayout(days,valoptions,columns,datalocs)
 
 
 
 
-@app.callback(
-    Output('graph-with-slider', 'figure'),
-    [Input('day-picker', 'start_date'),Input('day-picker', 'end_date'),Input('val-select',"value")],
-    )    
-def update_figure(start_day,end_day,val):
-    print("Plot date range:",start_day,":",end_day)
-    #Dataset,columns,days=getdata(dataloc)
-    dataset,columnsoptions,days=UpdateData(dataloc,Dataset,columns,days)
-    #global days
-    traces = []
-    #val="DHT-T"
-    for loc, df in dataset.items():
-       # print(selected_day)
-      #  sday=datetime.datetime.strptime(selected_day,"%Y-%m-%d")
-        #print(df[sday])
+if V.TimeSeries:
+    @app.callback(
+        Output('graph-with-slider', 'figure'),
+        [Input('day-picker', 'start_date'),Input('day-picker', 'end_date'),Input('val-select',"value")],
+        )    
+    def update_figure(start_day,end_day,val):
+        print("Plot date range:",start_day,":",end_day)
+        Dataset,columns,days=getdata(dataloc)
+        dataset,columnsoptions,days=UpdateData(dataloc,Dataset,columns,days)
+        #global days
+        traces = []
+        #val="DHT-T"
+        for loc, df in dataset.items():
+           # print(selected_day)
+          #  sday=datetime.datetime.strptime(selected_day,"%Y-%m-%d")
+            #print(df[sday])
+            if val in list(df.columns):
+              
+              filtered_df = df[start_day:end_day]
+              filtered_df=filtered_df.resample("1min").mean()
+              traces.append(dict(
+               x=filtered_df.index,
+               y=filtered_df[val],
+               text=loc,
+               mode='markers',
+               opacity=1,
+               marker={
+                  'size': 5,
+                  'line': {'width': 0.5, 'color': 'white'}
+               },
+               name=loc
+              ))
+        #Create axis range
+        if "RH" in val.upper():
+            ran=[0,100]
+            
+        else:
+            ran=[0,30]
+            if filtered_df[val].max()>30:
+              ran=[0,50]
+            elif filtered_df[val].max()>50:
+              ran=[0,70]
+              
+        #print(traces)
+       # Dataset=dataset
+        #global Dataset
+    
+        return {
+            'data': traces,
+            'layout': dict(
+                yaxis={ 'title': val,"range":ran},
+                xaxis={'title': 'time'},
+                margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+                legend={'x': 0, 'y': 1},
+                hovermode='closest',
+                transition = {'duration': 500},
+            )
+        }
+
+else:
+    @app.callback(
+        Output('graph-with-slider', 'figure'),
+        [Input('data-picker', 'value'),Input('val-select',"value")],
+        )    
+    def update_figure(loc,val):
+        print("Plot data :",loc)
+        Dataset,columns,days=getdata(dataloc)
+        #dataset,columnsoptions,days=UpdateData(dataloc,Dataset,columns,days)
+        print(loc)
+        print(Dataset.keys())
+        df=Dataset[loc]
+        #global days
+        traces = []
+        #val="DHT-T"
+       
+         # print(selected_day)
+        #  sday=datetime.datetime.strptime(selected_day,"%Y-%m-%d")
+          #print(df[sday])
         if val in list(df.columns):
-          
-          filtered_df = df[start_day:end_day]
-          filtered_df=filtered_df.resample("1min").mean()
-          traces.append(dict(
-           x=filtered_df.index,
-           y=filtered_df[val],
-           text=loc,
-           mode='markers',
-           opacity=1,
-           marker={
-              'size': 5,
-              'line': {'width': 0.5, 'color': 'white'}
-           },
-           name=loc
-          ))
-    #Create axis range
-    if "RH" in val.upper():
-        ran=[0,100]
+           # filtered_df = df[start_day:end_day]
+            filtered_df=df.resample("1min").mean()
+            traces.append(dict(
+             x=filtered_df.index,
+             y=filtered_df[val],
+             text=loc,
+             mode='markers',
+             opacity=1,
+             marker={
+                'size': 5,
+                'line': {'width': 0.5, 'color': 'white'}
+             },
+             name=loc
+            ))
+        #Create axis range
+        if "RH" in val.upper():
+            ran=[0,100]
+            
+        else:
+            ran=[0,filtered_df[val].max()+filtered_df[val].std()]
+           
+        #print(traces)
+       # Dataset=dataset
+        #global Dataset
+    
+        return {
+            'data': traces,
+            'layout': dict(
+                yaxis={ 'title': val,"range":ran},
+                xaxis={'title': 'time'},
+                margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+                legend={'x': 0, 'y': 1},
+                hovermode='closest',
+                transition = {'duration': 500},
+            )
+        }
         
-    else:
-        ran=[0,30]
-        if filtered_df[val].max()>30:
-          ran=[0,50]
-        elif filtered_df[val].max()>50:
-          ran=[0,70]
-          
-    #print(traces)
-    Dataset=dataset
-    #global Dataset
-
-    return {
-        'data': traces,
-        'layout': dict(
-            yaxis={ 'title': val,"range":ran},
-            xaxis={'title': 'time'},
-            margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
-            legend={'x': 0, 'y': 1},
-            hovermode='closest',
-            transition = {'duration': 500},
-        )
-    }
-   
+    
 if __name__ == '__main__':
     
+    import socket
+    # ホスト名を取得、表示
+    host = socket.gethostname()
 
-    app.run_server(debug=True,host=V.IP,port=V.PORT)
+    # ipアドレスを取得、表示
+    ip = socket.gethostbyname(host)
+    #print(host,ip)
+    app.run_server(debug=True,host=ip,port=5000)
 
 
 

@@ -36,6 +36,10 @@ import os
 import mpld3
 import csv
 
+sys.path.append("..") #Import varaibles in run from AQ_Plot_server directory 
+#sys.path.append(sys.path[0][0:sys.path[0].find("AQ_run")]) #Import varaiblesif run from home directory
+import variables as V #IMport the file names, you dont want to type them out
+
 
 
 #set varables for all fuctions 
@@ -407,7 +411,7 @@ def DataMarker(df,val,lat, lon,group):
 
 
 def DataMarkerInfo(df,val,lat, lon,group,info,locname):
-    
+    #2019 data makrder  #
     folium.Marker(location=[lat,lon],
                 
     popup=plotdataPopInfo(df,[val],info,locname),
@@ -415,23 +419,7 @@ def DataMarkerInfo(df,val,lat, lon,group,info,locname):
 ).add_to(group)   
 
 
-def GenCount(data):
-    """
-    Generate a total count from all bins for an OPC
     
-    """
-    counts=[]
-    for index,row in data.iterrows(): 
-        count=0
-        for column in data.columns:
-            if "b" in column:
-                count=count+row[column]    
-      #  print(count)
-        counts.append(count)
-    data.insert(len(data.columns),"BinCount",counts,True)
-    return data
-
-
 def plotdataPopInfo(df,vals,info,locname):
     """
     Popup data ploter with information columns 
@@ -454,39 +442,27 @@ def plotdataPopInfo(df,vals,info,locname):
         alpha=1 
         if len(vals) >1:
             alpha=0.8
-        
-        #define figure 
+    
         fig, ax = plt.subplots(figsize=(8,4))
-       # if "GPS" in info["Locations:"][0]:  #if its a GPS file add the 1 min mean to the plot
-        #    for val in vals:
-         #       minval=val+"(1 min-mean)" 
-          #      ax.plot(df[val], label=minval,alpha=alpha) 
-           # ax.legend()
-          
+      
+
         ax = df[vals].plot(ax=ax, legend=True, alpha=alpha)
         ax.set_ylabel('Mass concentration (uu g/m^3)')
         ax.set_xlabel('')
-        
       #  ax.xaxis.set_major_locator(mdates.MinuteLocator(interval=60*3))   #to get a tick every 6 hours 
         #ax.format_xdata = plt.DateFormatter('%H:%M')
         ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))     #optional formatting 
        # ax.set_title(info["Site"])
         ax.grid()
-        
        #create a htlmfile for the plot
         date=pd.to_datetime(df.index[0]).strftime("%Y%m%d")#get the date 
         figname = 'popplot_'+info["Location:"][0]+"_"+date+'.html'
         #The location dic has to be added sepratly, as the HTML map will be created from pic inside the same output directory
         print(locname+figname)
         
-        
         if not os.path.exists("Plots/"):
             os.makedirs("Plots/")
-        
-        
         mpld3.save_html(fig,"Plots//"+locname+figname)
-     
-    
         #Generate some more plot information based on data   
         #Replace with error if error occures 
         try:
@@ -524,7 +500,7 @@ def plotdataPopInfo(df,vals,info,locname):
                 pass
           
 
- 
+         
             
     #Set out the HTML for the popup
     #This take in the previous plot HTML just created and the sensor infrom for a info columns
@@ -537,20 +513,22 @@ def plotdataPopInfo(df,vals,info,locname):
          <style>
          
          .plot {
-           height: 350px;
-           width:700px;
+           height: 50%;
+           width: 100%;
            aligh=center;
            }
         .table {
           float: center;
-          width: 50%;
+          width: 100%;
+          align: center;
+          valign: middle;
            
         }
         /* Clear floats after the columns */
         .row:after {
           content: "";
           display: table;
-          aligh=center;
+          aligh: center;
           clear: both;
         }
         
@@ -565,16 +543,15 @@ def plotdataPopInfo(df,vals,info,locname):
       </head>
       <body>
       <h3 bgcolor="#FFFFFF" align="center" valign="top">"""+sitedate+"""</h3>
-    <div class ="row">
-   	<div class="plot">
-       <iframe src= '"""+"Plots//"+locname+figname+"""' name="sample" width="600" height="360">
-       </iframe>
-   	</div>
+    <div class ="row" aligh="center" >
+        	<div class="plot">
+           <iframe src= '"""+"Plots//"+locname+figname+"""' name="sample" width="600" height="360">
+           </iframe>
+       	</div>
     <br/>
-    </div>
-    <div class ="row">
+    
    	<div class="table"  align="center" >
-   		<table border="1! width="40" cellspacing="1" cellpadding="2" bordercolor="#333333">
+   		<table border="1! cellspacing="1" cellpadding="2" bordercolor="#333333">
    		<tr>
    		<th bgcolor="#EE0000"><font color="#FFFFFF">Location</font></th>
    		<th bgcolor="#EE0000" align="right" width="150"><font color="#FFFFFF">"""+sitename+"""</font></th></tr>
@@ -602,9 +579,8 @@ def plotdataPopInfo(df,vals,info,locname):
    		<td bgcolor="#FFFFFF" align="center" valign="top" width="150">"""+MIN+"""</td>
    		</tr>
    	
-   
    		</table>
-   	</div>
+       	</div>
     </div>
       
       
@@ -624,6 +600,26 @@ def plotdataPopInfo(df,vals,info,locname):
                 print(type(e))
                 print(e.args)
                 pass
+
+
+
+def GenCount(data):
+    """
+    Generate a total count from all bins for an OPC
+    
+    """
+    counts=[]
+    for index,row in data.iterrows(): 
+        count=0
+        for column in data.columns:
+            if "b" in column:
+                count=count+row[column]    
+      #  print(count)
+        counts.append(count)
+    data.insert(len(data.columns),"BinCount",counts,True)
+    return data
+
+
 
 
 def plotdataPopVega(data,vals):
@@ -977,6 +973,7 @@ def genmap(Datadic,val,titlename,infos,locname):
              if Stilldic!="ERROR": #plot data as a circle 
                  for sk,stdf in Stilldic.items():
                      print(stdf[val])
+                     #Humudity Corrections 
                      stdf[val]=SDSCal(stdf[val])
                   #   return stdf
                      print(stdf[["lat","lon","DHT-RH"]])
@@ -1008,34 +1005,42 @@ def genmap(Datadic,val,titlename,infos,locname):
      m.save(titlename+".html")
      print("Map Created")
         
-#def main():
-dataloc="date/TestData"
-files=glob.glob(dataloc+"/*****.csv")
-datadic={}
-datainfos={}
-dates={}
-for file in files:
-    print(file)
-    fileinfo=file.split("\\")[1].replace(".csv","").split("_")
-    loc=fileinfo[0]
-    date=fileinfo[~0]
-    data,datainfo=Walkdata(file)
-   # data=data.iloc[data.index.dropna()] #Cut nan time 
-    #data=pd.read_csv(file,header=4,index_col=0)
-    data.index=pd.to_datetime(data.index)
-    data=data[data.index.notnull()] #drop nan index 
-    if loc in datadic.keys():
-        datadic[loc]=pd.concat([datadic[loc],data],axis=0)
+def main():
+    dataloc=V.DATAFOLDER
+    files=glob.glob(dataloc+"/*****.csv")
+    datadic={}
+    datainfos={}
+    dates={}
+    for file in files:
+        print(file)
+        print(os.path.normpath(file).split(os.sep))
+        if "GPS" in file:
+            #              Normalise path    split     [file][Cut .csv] split 
+            fileinfo=os.path.normpath(file).split(os.sep)[~0][:~0-3].split("_") #Split path, get file name split into bits 
+            print(fileinfo)
+            loc=fileinfo[0]
+            print("loc:",loc)
+            date=fileinfo[~0]
+            print("date",date)
+            data,datainfo=Walkdata(file)
+           # data=data.iloc[data.index.dropna()] #Cut nan time 
+            #data=pd.read_csv(file,header=4,index_col=0)
+            data.index=pd.to_datetime(data.index)
+            data=data[data.index.notnull()] #drop nan index 
+            if loc in datadic.keys():
+                datadic[loc]=pd.concat([datadic[loc],data],axis=0)
+        
+            else:
+                datadic[loc]=data
+                datainfos[loc]=datainfo
+                dates[loc]=date
+    #for loc in datadic.keys():
+    titlename="GPS_MAP" #loc+"_"+dateinfo[loc]
+    locname=loc
+    val="sds-pm2.5"
+    stdf=genmap(datadic,val,titlename,datainfos,locname)
 
-    else:
-        datadic[loc]=data
-        datainfos[loc]=datainfo
-        dates[loc]=date
-#for loc in datadic.keys():
-titlename="GPS_MAP" #loc+"_"+dateinfo[loc]
-locname=loc
-val="sds-pm2.5"
-stdf=genmap(datadic,val,titlename,datainfos,locname)
+    return datadic
     
-#if __name__ == "__main__":
-#    main()
+if __name__ == "__main__":
+    datadic=main()
